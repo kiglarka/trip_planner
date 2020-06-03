@@ -22,4 +22,8 @@ public class Trip {
     public String getCity() {
         return city;
     }
+
+    public String getContinent() {
+        return continent;
+    }
 }
