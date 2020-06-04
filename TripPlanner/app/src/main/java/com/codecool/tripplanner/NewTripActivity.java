@@ -13,8 +13,8 @@ public class NewTripActivity extends AppCompatActivity {
 
 
     public static final String EXTRA_CITY = "com.example.android.wordlistsql.REPLY";
-    public static final String EXTRA_CONTINENT = "com.example.android.wordlistsql.REPLY";
-    public static final String EXTRA_COUNTRY = "com.example.android.wordlistsql.REPLY";
+    public static final String EXTRA_CONTINENT = "com.example.android.wordlistsql.REPLY1";
+    public static final String EXTRA_COUNTRY = "com.example.android.wordlistsql.REPLY2";
 
     private EditText addCity;
     private EditText addCountry;
@@ -25,6 +25,7 @@ public class NewTripActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_word);
+
         addCity = findViewById(R.id.add_city);
         addContinent = findViewById(R.id.add_continent);
         addCountry = findViewById(R.id.add_country);
@@ -42,7 +43,6 @@ public class NewTripActivity extends AppCompatActivity {
                     String country = addCountry.getText().toString();
 
                     replyIntent.putExtra(EXTRA_CITY, city);
-
                     replyIntent.putExtra(EXTRA_CONTINENT, continent);
                     replyIntent.putExtra(EXTRA_COUNTRY, country);
                     setResult(RESULT_OK, replyIntent);

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Trip trip = new Trip(Objects.requireNonNull(data.getStringExtra(NewTripActivity.EXTRA_CITY)),"","");
+            Trip trip = new Trip(Objects.requireNonNull(data.getStringExtra(NewTripActivity.EXTRA_CITY)),data.getStringExtra(NewTripActivity.EXTRA_CONTINENT),data.getStringExtra(NewTripActivity.EXTRA_COUNTRY));
             tripViewModel.insert(trip);
         } else {
             Toast.makeText(
