@@ -1,9 +1,11 @@
 package com.codecool.tripplanner;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,6 +35,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             cityView = itemView.findViewById(R.id.city);
             countryView = itemView.findViewById(R.id.country);
             continentView = itemView.findViewById(R.id.continent);
+
         }
     }
 
