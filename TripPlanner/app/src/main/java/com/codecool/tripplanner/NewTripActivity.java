@@ -24,7 +24,7 @@ public class NewTripActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_word);
+        setContentView(R.layout.activity_new_trip);
 
         addCity = findViewById(R.id.add_city);
         addContinent = findViewById(R.id.add_continent);
