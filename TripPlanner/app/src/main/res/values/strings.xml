@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Trip Planner</string>
     <string name="add_word">Add new word</string>
-    <string name="sample_city">Canada</string>
+    <string name="sample_city">New Jersey</string>
+    <string name="sample_continent">North America</string>
+    <string name="sample_country">USA</string>
 </resources>

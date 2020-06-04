@@ -30,11 +30,17 @@ public abstract class TripRoomDatabase extends RoomDatabase {
                 TripDao dao = INSTANCE.tripDao();
                 dao.deleteAll();
 
-                Trip trip = new Trip("Paris");
+                Trip trip = new Trip("Paris", "Europe", "France");
                 dao.insert(trip);
-                trip = new Trip("Copenhagen");
+                trip = new Trip("Copenhagen", "Europe", "Denmark");
                 dao.insert(trip);
-                trip = new Trip("New York");
+                trip = new Trip("New York", "North America", "USA");
+                dao.insert(trip);
+                trip = new Trip("London", "Europe", "United Kingdom");
+                dao.insert(trip);
+                trip = new Trip("Rejkjavik", "Europe", "Iceland");
+                dao.insert(trip);
+                trip = new Trip("Istanbul", "Europe", "Turkey");
                 dao.insert(trip);
 
                 /*

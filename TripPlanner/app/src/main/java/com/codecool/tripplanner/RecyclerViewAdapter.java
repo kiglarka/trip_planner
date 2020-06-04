@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +24,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         //private final CircleImageView image;
         private final TextView cityView;
+        private final TextView countryView;
+        private final TextView continentView;
 
         private TripViewHolder(View itemView) {
             super(itemView);
             //image = itemView.findViewById(R.id.image);
             cityView = itemView.findViewById(R.id.city);
+            countryView = itemView.findViewById(R.id.country);
+            continentView = itemView.findViewById(R.id.continent);
         }
     }
 
@@ -58,6 +64,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         if (cities != null) {
             Trip current = cities.get(position);
             holder.cityView.setText(current.getCity());
+            holder.continentView.setText(current.getContinent());
+            holder.countryView.setText(current.getCountry());
 
         } else {
             holder.cityView.setText("No city found");
