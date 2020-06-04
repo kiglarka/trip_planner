@@ -27,10 +27,6 @@ recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     private static final String TAG = "MainActivity";
 
-    private ArrayList<Trip> cities = new ArrayList<>();
-    private ArrayList<Trip> continents = new ArrayList<>();
-    private ArrayList<Trip> imageUrls = new ArrayList<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +39,6 @@ recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
-
-        tripViewModel.getAllTrips().observe(this, new Observer<List<Trip>>() {
-
-            @Override
-            public void onChanged(@Nullable final List<Trip> trips) {
-                adapter.setWords((ArrayList<Trip>) trips);
-            }
-
-        });
     }
 
 
