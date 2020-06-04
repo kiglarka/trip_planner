@@ -7,15 +7,22 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     private TripViewModel tripViewModel;
+
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+
 
 
     @Override
@@ -30,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
         tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
 
-
         tripViewModel.getAllTrips().observe(this, new Observer<List<Trip>>() {
             @Override
             public void onChanged(@Nullable final List<Trip> trips) {
@@ -38,6 +44,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, NewTripActivity.class);
+                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+            }
+        });
+
     }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            Trip trip = new Trip(Objects.requireNonNull(data.getStringExtra(NewTripActivity.EXTRA_CITY)),"","");
+            tripViewModel.insert(trip);
+        } else {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.empty_not_saved,
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+
+
 
 }
