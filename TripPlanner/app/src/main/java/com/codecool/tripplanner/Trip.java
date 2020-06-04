@@ -13,13 +13,11 @@ public class Trip {
     @ColumnInfo(name = "city")
     private String city;
 
-    private String continent;
-    private String imgUrl;
+    //private String continent;
+    //private String imgUrl;
 
-    public Trip(@NonNull String city, String continent, String imgUrl) {
+    public Trip(@NonNull String city) {
         this.city = city;
-        this.continent = continent;
-        this.imgUrl = imgUrl;
     }
 
     @NonNull
@@ -27,11 +25,4 @@ public class Trip {
         return city;
     }
 
-    public String getContinent() {
-        return continent;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
 }

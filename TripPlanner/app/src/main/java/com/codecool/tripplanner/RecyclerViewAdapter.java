@@ -16,16 +16,16 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TripViewHolder>  {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TripViewHolder> {
 
-    class TripViewHolder extends RecyclerView.ViewHolder{
+    class TripViewHolder extends RecyclerView.ViewHolder {
 
-        private final CircleImageView image;
+        //private final CircleImageView image;
         private final TextView cityView;
 
-        private TripViewHolder(@NonNull View itemView) {
+        private TripViewHolder(View itemView) {
             super(itemView);
-            image = itemView.findViewById(R.id.image);
+            //image = itemView.findViewById(R.id.image);
             cityView = itemView.findViewById(R.id.city);
         }
     }
@@ -33,29 +33,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private final LayoutInflater inflater;
     private List<Trip> cities; // cached copy of words
 
-    RecyclerViewAdapter(Context context) { inflater = LayoutInflater.from(context); }
+    RecyclerViewAdapter(Context context) {
+        inflater = LayoutInflater.from(context);
+    }
 
 
     @NonNull
     @Override
     public TripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.layout_listitem, parent,false);
+        View view = inflater.inflate(R.layout.layout_listitem, parent, false);
         return new TripViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TripViewHolder holder, final int position) {
-        //Log.d(TAG, "onBindViewHolder: called");
+    public void onBindViewHolder(@NonNull TripViewHolder holder, int position) {
 
         /*
         Glide.with(context)
                 .asBitmap()
                 .load(images.get(position))
                 .into(holder.image);
-
          */
-
-
 
         if (cities != null) {
             Trip current = cities.get(position);
@@ -67,18 +65,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     }
 
-    void setWords(List<Trip> trips){
+    void setWords(List<Trip> trips) {
         cities = trips;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (cities != null){
+        if (cities != null) {
             return cities.size();
+        } else return 0;
 
-        } else {
-            return 0;
-        }
 
-}}
+    }
+}
