@@ -1,6 +1,9 @@
 package com.codecool.tripplanner;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,32 +11,52 @@ import android.os.Bundle;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+    /*
+    RecyclerView recyclerView = findViewById(R.id.recyclerview);
+final WordListAdapter adapter = new WordListAdapter(this);
+recyclerView.setAdapter(adapter);
+recyclerView.setLayoutManager(new LinearLayoutManager(this));
+     */
+
+    private TripViewModel tripViewModel;
+
+
     private static final String TAG = "MainActivity";
 
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<String> imageUrls = new ArrayList<>();
+    private ArrayList<Trip> cities = new ArrayList<>();
+    private ArrayList<Trip> continents = new ArrayList<>();
+    private ArrayList<Trip> imageUrls = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Log.d(TAG, "onCreate: started ");
-        initImageBitmaps();
 
-    }
 
-    private void initRecyclerView() {
-        Log.d(TAG, "initRecyclerView: init recyclerview");
-        RecyclerView recyclerView = findViewById(R.id.recycle_view);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this,names,imageUrls);
+        RecyclerView recyclerView = findViewById(R.id.recyclerview);
+        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
+
+        tripViewModel.getAllTrips().observe(this, new Observer<List<Trip>>() {
+
+            @Override
+            public void onChanged(@Nullable final List<Trip> trips) {
+                adapter.setWords((ArrayList<Trip>) trips);
+            }
+
+        });
     }
 
+
+    /*
     private void initImageBitmaps(){
         Log.d(TAG, "initImageBitmaps: preparing bitmaps");
         imageUrls.add("https://africana.arizona.edu/sites/africana.arizona.edu/files/Eiffel-Tower-Paris-France.jpg");
@@ -48,4 +71,6 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
 
     }
+
+     */
 }

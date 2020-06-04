@@ -2,13 +2,18 @@ package com.codecool.tripplanner;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * Abstract class extending RoomDatabase for creating DB
+ */
 @Database(entities = {Trip.class}, version = 1, exportSchema = false)
 public abstract class TripRoomDatabase extends RoomDatabase {
 
@@ -25,6 +30,7 @@ public abstract class TripRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TripRoomDatabase.class, "trip_database")
+                            .addCallback(sRoomDatabaseCallback)
                             .build();
                 }
             }
@@ -32,5 +38,45 @@ public abstract class TripRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
+    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onOpen(@NonNull SupportSQLiteDatabase db) {
+            super.onOpen(db);
+
+            // If you want to keep data through app restarts,
+            // comment out the following block
+            databaseWriteExecutor.execute(() -> {
+                // Populate the database in the background.
+                // If you want to start with more words, just add them.
+                TripDao dao = INSTANCE.tripDao();
+                dao.deleteAll();
+
+                Trip trip = new Trip("Paris","Europe", "https://africana.arizona.edu/sites/africana.arizona.edu/files/Eiffel-Tower-Paris-France.jpg");
+                dao.insert(trip);
+                Trip trip2 = new Trip("Copenhagen","Europe", "https://img.washingtonpost.com/blogs/wonkblog/files/2016/08/Nyhavn_copenhagen.jpg");
+                dao.insert(trip2);
+                Trip trip3 = new Trip("New York","North America", "https://data.jigsawpuzzle.co.uk/clementoni.8/virtual-reality-new-york-jigsaw-puzzle-1000-pieces.60917-1.fs.jpg");
+                dao.insert(trip2);
+
+            });
+        }
+    };
+
+    /*
+        private void initImageBitmaps(){
+        Log.d(TAG, "initImageBitmaps: preparing bitmaps");
+        imageUrls.add("https://africana.arizona.edu/sites/africana.arizona.edu/files/Eiffel-Tower-Paris-France.jpg");
+        names.add("Paris");
+
+        imageUrls.add("https://img.washingtonpost.com/blogs/wonkblog/files/2016/08/Nyhavn_copenhagen.jpg");
+        names.add("Copenhagen");
+
+        imageUrls.add("https://data.jigsawpuzzle.co.uk/clementoni.8/virtual-reality-new-york-jigsaw-puzzle-1000-pieces.60917-1.fs.jpg");
+        names.add("New York");
+
+        initRecyclerView();
+
+    }
+     */
 
 }

@@ -10,20 +10,28 @@ public class Trip {
 
     @PrimaryKey
     @NonNull
-    @ColumnInfo(name = "City")
+    @ColumnInfo(name = "city")
     private String city;
-    private String continent;
 
-    public Trip(String city, String continent) {
+    private String continent;
+    private String imgUrl;
+
+    public Trip(@NonNull String city, String continent, String imgUrl) {
         this.city = city;
         this.continent = continent;
+        this.imgUrl = imgUrl;
     }
 
+    @NonNull
     public String getCity() {
         return city;
     }
 
     public String getContinent() {
         return continent;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
     }
 }
