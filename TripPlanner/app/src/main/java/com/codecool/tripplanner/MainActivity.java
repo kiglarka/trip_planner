@@ -10,16 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
     private TripViewModel tripViewModel;
+
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
@@ -36,11 +39,23 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
-
         tripViewModel.getAllTrips().observe(this, new Observer<List<Trip>>() {
             @Override
             public void onChanged(@Nullable final List<Trip> trips) {
-                adapter.setWords(trips);
+
+                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
+                TextView status_message = findViewById(R.id.status_message);
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (trips.size()==0) status_message.setText(R.string.no_trips);
+                else {
+                    status_message.setVisibility(View.GONE);
+
+                    adapter.setWords(trips);
+                }
             }
         });
 

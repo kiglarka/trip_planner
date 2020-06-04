@@ -30,6 +30,7 @@ public abstract class TripRoomDatabase extends RoomDatabase {
                 TripDao dao = INSTANCE.tripDao();
                 dao.deleteAll();
 
+
                 Trip trip = new Trip("Paris", "Europe", "France");
                 dao.insert(trip);
                 trip = new Trip("Copenhagen", "Europe", "Denmark");
@@ -42,6 +43,8 @@ public abstract class TripRoomDatabase extends RoomDatabase {
                 dao.insert(trip);
                 trip = new Trip("Istanbul", "Europe", "Turkey");
                 dao.insert(trip);
+
+
 
                 /*
                 Trip trip = new Trip("Paris","Europe", "https://africana.arizona.edu/sites/africana.arizona.edu/files/Eiffel-Tower-Paris-France.jpg");
