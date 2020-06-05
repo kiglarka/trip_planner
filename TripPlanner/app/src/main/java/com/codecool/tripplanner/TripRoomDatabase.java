@@ -31,17 +31,17 @@ public abstract class TripRoomDatabase extends RoomDatabase {
                 dao.deleteAll();
 
 
-                Trip trip = new Trip("Paris", "Europe", "France");
+                Trip trip = new Trip("Paris", "Europe", "France", "https://africana.arizona.edu/sites/africana.arizona.edu/files/Eiffel-Tower-Paris-France.jpg");
                 dao.insert(trip);
-                trip = new Trip("Copenhagen", "Europe", "Denmark");
+                trip = new Trip("Copenhagen", "Europe", "Denmark", "https://img.washingtonpost.com/blogs/wonkblog/files/2016/08/Nyhavn_copenhagen.jpg");
                 dao.insert(trip);
-                trip = new Trip("New York", "North America", "USA");
+                trip = new Trip("New York", "North America", "USA", "https://data.jigsawpuzzle.co.uk/clementoni.8/virtual-reality-new-york-jigsaw-puzzle-1000-pieces.60917-1.fs.jpg");
                 dao.insert(trip);
-                trip = new Trip("London", "Europe", "United Kingdom");
+                trip = new Trip("London", "Europe", "United Kingdom", "https://m.blog.hu/ku/kulturpart/2015-12-08/london-penzugyi-kozpont-londoniapro-62746.jpeg");
                 dao.insert(trip);
-                trip = new Trip("Rejkjavik", "Europe", "Iceland");
+                trip = new Trip("Rejkjavik", "Europe", "Iceland", "https://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/Iceland/Reykjavik/reykjavik-guide-lead-image-48-hours-xlarge.jpg");
                 dao.insert(trip);
-                trip = new Trip("Istanbul", "Europe", "Turkey");
+                trip = new Trip("Istanbul", "Europe", "Turkey", "https://idsb.tmgrup.com.tr/ly/uploads/images/2020/04/17/thumbs/800x531/31299.jpg");
                 dao.insert(trip);
 
 

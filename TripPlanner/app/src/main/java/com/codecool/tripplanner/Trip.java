@@ -15,13 +15,15 @@ public class Trip {
 
     private String continent;
     private String country;
+    private String image;
 
     //private String imgUrl;
 
-    public Trip(@NonNull String city, String continent, String country) {
+    public Trip(@NonNull String city, String continent, String country, String image) {
         this.city = city;
         this.continent = continent;
         this.country = country;
+        this.image = image;
     }
 
 
@@ -38,5 +40,9 @@ public class Trip {
 
     public String getCountry() {
         return country;
+    }
+
+    public String getImage() {
+        return image;
     }
 }

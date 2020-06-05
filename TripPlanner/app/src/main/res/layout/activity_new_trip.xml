@@ -7,46 +7,44 @@
 
     <EditText
         android:id="@+id/add_continent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_padding"
-        android:fontFamily="sans-serif-light"
+        style="@style/add_trip"
         android:hint="@string/hint_continent"
-        android:inputType="textAutoComplete"
-        android:minHeight="@dimen/min_height"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/add_city"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/add_country"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_city"
+        android:autofillHints="" />
 
     <EditText
         android:id="@+id/add_city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_padding"
-        android:fontFamily="sans-serif-light"
+        style="@style/add_trip"
         android:hint="@string/hint_city"
-        android:inputType="textAutoComplete"
-        android:minHeight="@dimen/min_height"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/add_country"
-        app:layout_constraintTop_toBottomOf="@+id/add_continent"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintBottom_toTopOf="@+id/add_continent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints=""/>
 
 
     <EditText
         android:id="@+id/add_country"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/big_padding"
-        android:fontFamily="sans-serif-light"
+        style="@style/add_trip"
         android:hint="@string/hint_country"
-        android:inputType="textAutoComplete"
-        android:minHeight="@dimen/min_height"
-        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/add_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_continent"
+        android:autofillHints=""/>
+
+    <EditText
+        android:id="@+id/add_image"
+        style="@style/add_trip"
+        android:hint="@string/hint_image"
         app:layout_constraintBottom_toTopOf="@+id/button_save"
-        app:layout_constraintTop_toBottomOf="@+id/add_city"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_country"
+        android:autofillHints=""/>
 
     <Button
         android:id="@+id/button_save"
@@ -57,7 +55,8 @@
         android:text="@string/button_save"
         android:textColor="@color/buttonLabel"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_country"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
