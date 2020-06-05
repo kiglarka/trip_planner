@@ -122,7 +122,4 @@ public class MainActivity extends AppCompatActivity {
                     Toast.LENGTH_LONG).show();
         }
     }
-
-    public void initiate(View view) {
-    }
 }
