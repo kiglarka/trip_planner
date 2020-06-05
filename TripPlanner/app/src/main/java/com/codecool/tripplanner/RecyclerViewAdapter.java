@@ -34,13 +34,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private final TextView countryView;
         private final TextView continentView;
 
+
         private TripViewHolder(View itemView) {
             super(itemView);
             cityView = itemView.findViewById(R.id.city);
             countryView = itemView.findViewById(R.id.country);
             continentView = itemView.findViewById(R.id.continent);
             imageView = itemView.findViewById(R.id.image);
-                   }
+
+        }
     }
 
     private final LayoutInflater inflater;
@@ -78,7 +80,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Picasso.get()
                         .load(current.getImage())
                         .placeholder(R.drawable.ic_launcher_background)
-                        .resize(80,80)
+                        .resize(80, 80)
                         .centerCrop()
                         .into(holder.imageView);
             } catch (Exception e) {

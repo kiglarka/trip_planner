@@ -7,14 +7,21 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
@@ -27,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
 
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
+    private static final int ERROR_DIALOG_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +72,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void init() {
+        if (isServicesOK()){
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(intent);
+        }
+    }
+
+
     private void addClickListenerToFloatingButton() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +90,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public boolean isServicesOK() {
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(MainActivity.this);
+        if (available == ConnectionResult.SUCCESS) {
+            return true;
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(MainActivity.this, available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+
+        } else {
+            Toast.makeText(this, "You can't make maps request", Toast.LENGTH_SHORT).show();
+        }
+        return false;
+    }
+
+
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
