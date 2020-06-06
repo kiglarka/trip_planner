@@ -1,6 +1,7 @@
 package com.codecool.tripplanner;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.lifecycle.LiveData;
 
@@ -11,8 +12,8 @@ public class TripRepository {
     private TripDao tripDao;
     private LiveData<List<Trip>> allTrips;
 
-    TripRepository(Application application) {
-        TripRoomDatabase db = TripRoomDatabase.getDatabase(application);
+    public TripRepository(Context context) {
+        TripRoomDatabase db = TripRoomDatabase.getDatabase(context);
         tripDao = db.tripDao();
         allTrips = tripDao.getAlphabetizedTrips();
     }
@@ -25,7 +26,7 @@ public class TripRepository {
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
     // that you're not doing any long running operations on the main thread, blocking the UI.
-    void insert(Trip trip) {
+    public void insert(Trip trip) {
         TripRoomDatabase.databaseWriteExecutor.execute(() -> {
             tripDao.insert(trip);
         });
