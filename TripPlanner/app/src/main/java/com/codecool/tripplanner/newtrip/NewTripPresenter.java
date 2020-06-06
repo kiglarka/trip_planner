@@ -2,9 +2,8 @@ package com.codecool.tripplanner.newtrip;
 
 import android.content.Context;
 
-import com.codecool.tripplanner.Trip;
-import com.codecool.tripplanner.TripRepository;
-import com.codecool.tripplanner.newtrip.NewTripContract;
+import com.codecool.tripplanner.db.Trip;
+import com.codecool.tripplanner.db.TripRepository;
 
 public class NewTripPresenter<V extends NewTripContract> {
 

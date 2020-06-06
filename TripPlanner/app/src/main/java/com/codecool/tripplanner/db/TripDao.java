@@ -1,4 +1,4 @@
-package com.codecool.tripplanner;
+package com.codecool.tripplanner.db;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;

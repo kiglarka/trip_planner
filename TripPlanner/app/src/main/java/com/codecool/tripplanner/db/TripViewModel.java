@@ -1,4 +1,4 @@
-package com.codecool.tripplanner;
+package com.codecool.tripplanner.db;
 
 import android.app.Application;
 
@@ -18,7 +18,7 @@ public class TripViewModel extends AndroidViewModel {
         allTrips = mRepository.getAllTrips();
     }
 
-    LiveData<List<Trip>> getAllTrips() { return allTrips; }
+    public LiveData<List<Trip>> getAllTrips() { return allTrips; }
 
     public void insert(Trip trip) { mRepository.insert(trip); }
 }

@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.codecool.tripplanner.R;
-import com.codecool.tripplanner.Trip;
+import com.codecool.tripplanner.db.Trip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
