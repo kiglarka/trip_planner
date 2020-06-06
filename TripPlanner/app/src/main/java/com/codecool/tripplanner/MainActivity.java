@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private TripViewModel tripViewModel;
     private RecyclerView recyclerView;
 
-    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
     private static final int ERROR_DIALOG_REQUEST = 1;
 
     @Override
@@ -67,24 +66,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*
-    public void init(View view) {
-        if (isServicesOK()){
-            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-            startActivity(intent);
-        }
-    }
-
-     */
-
-
     private void addClickListenerToFloatingButton() {
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, NewTripActivity.class);
-                startActivityForResult(intent, NEW_WORD_ACTIVITY_REQUEST_CODE);
+                startActivity(intent);
             }
         });
     }
@@ -103,21 +91,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-
-
-
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Trip trip = new Trip(Objects.requireNonNull(data.getStringExtra(NewTripActivity.EXTRA_CITY)), data.getStringExtra(NewTripActivity.EXTRA_CONTINENT), data.getStringExtra(NewTripActivity.EXTRA_COUNTRY), data.getStringExtra(NewTripActivity.EXTRA_IMAGE));
-            tripViewModel.insert(trip);
-        } else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
-        }
-    }
+    
 }

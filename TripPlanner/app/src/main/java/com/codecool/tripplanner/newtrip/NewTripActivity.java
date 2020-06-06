@@ -14,10 +14,13 @@ import com.codecool.tripplanner.Trip;
 public class NewTripActivity extends AppCompatActivity implements NewTripContract {
 
 
+    /*
     public static final String EXTRA_CITY = "com.example.android.wordlistsql.REPLY";
     public static final String EXTRA_CONTINENT = "com.example.android.wordlistsql.REPLY1";
     public static final String EXTRA_COUNTRY = "com.example.android.wordlistsql.REPLY2";
     public static final String EXTRA_IMAGE = "com.example.android.wordlistsql.REPLY3";
+
+     */
 
     private EditText addCity;
     private EditText addCountry;
