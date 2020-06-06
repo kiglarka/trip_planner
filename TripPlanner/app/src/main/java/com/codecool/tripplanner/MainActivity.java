@@ -11,6 +11,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +24,23 @@ import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
+
     private TripViewModel tripViewModel;
-    private RecyclerView recyclerView;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+    @BindView(R.id.recyclerview)
+    RecyclerView recyclerView;
+    @BindView(R.id.loadingPanel)
+    RelativeLayout loadingPanel;
+    @BindView(R.id.status_message)
+    TextView status_message;
+
 
     private static final int ERROR_DIALOG_REQUEST = 1;
 
@@ -34,8 +48,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
 
-        recyclerView = findViewById(R.id.recyclerview);
+
         final RecyclerViewAdapter adapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -50,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         tripViewModel.getAllTrips().observe(this, new Observer<List<Trip>>() {
             @Override
             public void onChanged(@Nullable final List<Trip> trips) {
-                findViewById(R.id.loadingPanel).setVisibility(View.GONE);
-                TextView status_message = findViewById(R.id.status_message);
+                loadingPanel.setVisibility(View.GONE);
+
                 try {
                     TimeUnit.SECONDS.sleep(2);
                 } catch (InterruptedException e) {
@@ -67,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addClickListenerToFloatingButton() {
-        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,5 +105,5 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
-    
+
 }
