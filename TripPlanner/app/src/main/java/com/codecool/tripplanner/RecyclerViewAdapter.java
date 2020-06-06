@@ -23,25 +23,28 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TripViewHolder> {
 
     class TripViewHolder extends RecyclerView.ViewHolder {
 
-        private final CircleImageView imageView;
-        private final TextView cityView;
-        private final TextView countryView;
-        private final TextView continentView;
+        @BindView(R.id.image)
+        CircleImageView imageView;
+
+        @BindView(R.id.city)
+        TextView cityView;
+        @BindView(R.id.country)
+        TextView countryView;
+        @BindView(R.id.continent)
+        TextView continentView;
 
 
         private TripViewHolder(View itemView) {
             super(itemView);
-            cityView = itemView.findViewById(R.id.city);
-            countryView = itemView.findViewById(R.id.country);
-            continentView = itemView.findViewById(R.id.continent);
-            imageView = itemView.findViewById(R.id.image);
-
+            ButterKnife.bind(this,itemView);
         }
     }
 
