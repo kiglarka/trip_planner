@@ -26,7 +26,11 @@ public class NewTripActivity extends AppCompatActivity implements NewTripContrac
     @BindView(R.id.add_image)
     EditText addImage;
 
+    @BindView(R.id.button_save)
+    Button button;
+
     NewTripPresenter presenter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +41,10 @@ public class NewTripActivity extends AppCompatActivity implements NewTripContrac
         presenter = new NewTripPresenter(this);
         presenter.onAttach(this);
 
+        gatherUserInputUponClickOnSave();
+    }
 
-        final Button button = findViewById(R.id.button_save);
+    private void gatherUserInputUponClickOnSave() {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
@@ -50,7 +56,6 @@ public class NewTripActivity extends AppCompatActivity implements NewTripContrac
                 Trip trip = new Trip(city, continent,country, image);
                 presenter.saveTrip(trip);
             }
-
 
         });
     }
