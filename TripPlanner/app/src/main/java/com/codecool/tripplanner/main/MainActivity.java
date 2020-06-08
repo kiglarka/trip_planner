@@ -9,6 +9,7 @@ import androidx.room.Room;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.RelativeLayout;
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Trip> trips;
     private TripRoomDatabase database;
+    private RoomRepository roomRepository;
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -56,11 +58,14 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(this);
+        final com.codecool.tripplanner.RecyclerViewAdapter adapter = new com.codecool.tripplanner.RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        database = TripRoomDatabase.getDatabase(this);
-        //adapter.setWords();
+
+        //database = TripRoomDatabase.getDatabase(this);
+        RoomRepository roomRepository = new RoomRepository(this);
+        List<Trip> trips = roomRepository.getAllTrips();
+        adapter.setWords(trips);
 
 
 
@@ -68,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         addClickListenerToFloatingButton();
 
     }
+
 
     /*
     private void loadTripsToAdapter(RecyclerViewAdapter adapter) {
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
 
-    private void defaultView(@Nullable List<Trip> trips, RecyclerViewAdapter adapter) {
+    private void defaultView(@Nullable List<Trip> trips, com.codecool.tripplanner.RecyclerViewAdapter adapter) {
         loadingPanel.setVisibility(View.GONE);
 
         try {
