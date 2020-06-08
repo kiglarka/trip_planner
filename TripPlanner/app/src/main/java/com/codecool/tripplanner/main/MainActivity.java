@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     // private TripViewModel tripViewModel;
-
+    private RecyclerViewAdapter adapter;
     private List<Trip> trips;
     private TripRoomDatabase database;
     private RoomRepository roomRepository;
@@ -59,23 +59,27 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(this);
+        adapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        //database = TripRoomDatabase.getDatabase(this);
+        database = TripRoomDatabase.getDatabase(this);
         roomRepository = new RoomRepository(this);
         trips = roomRepository.getAllTrips();
-        //adapter.setWords(trips);
-        defaultView(trips,adapter);
-
-
+        defaultView();
+        adapter.setWords(trips);
 
         //loadTripsToAdapter(adapter);
         addClickListenerToFloatingButton();
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.setWords(roomRepository.getAllTrips());
+
+    }
 
     /*
     private void loadTripsToAdapter(RecyclerViewAdapter adapter) {
@@ -86,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
 
-    private void defaultView(@Nullable List<Trip> trips, RecyclerViewAdapter adapter) {
+    private void defaultView() {
         loadingPanel.setVisibility(View.GONE);
 
         try {
@@ -97,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         if (trips.size() == 0) status_message.setText(R.string.no_trips);
         else {
             status_message.setVisibility(View.GONE);
-            adapter.setWords(trips);
+            //adapter.setWords(trips);
         }
     }
 

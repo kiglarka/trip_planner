@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface TripDao {
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Trip trip);
 
     @Query("DELETE FROM trip_table")
