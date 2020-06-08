@@ -9,11 +9,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.codecool.tripplanner.R;
-import com.codecool.tripplanner.db.Trip;
+import com.codecool.tripplanner.db2.Trip;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+// activity implements the contract
 public class NewTripActivity extends AppCompatActivity implements NewTripContract {
 
 
@@ -29,6 +30,7 @@ public class NewTripActivity extends AppCompatActivity implements NewTripContrac
     @BindView(R.id.button_save)
     Button button;
 
+    // initiate a presenter as a field as a brand new instance of presenter
     NewTripPresenter presenter;
 
 
@@ -54,7 +56,7 @@ public class NewTripActivity extends AppCompatActivity implements NewTripContrac
                 String image = addImage.getText().toString();
 
                 Trip trip = new Trip(city, continent,country, image);
-                presenter.saveTrip(trip);
+                presenter.insert(trip);
             }
 
         });

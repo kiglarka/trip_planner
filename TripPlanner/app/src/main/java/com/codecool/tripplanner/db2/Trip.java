@@ -1,4 +1,4 @@
-package com.codecool.tripplanner.db;
+package com.codecool.tripplanner.db2;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

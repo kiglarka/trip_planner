@@ -1,26 +1,37 @@
-package com.codecool.tripplanner.db;
+package com.codecool.tripplanner.db2;
 
 import android.content.Context;
 
-import androidx.lifecycle.LiveData;
+import com.codecool.tripplanner.db2.Trip;
+import com.codecool.tripplanner.db2.TripDao;
+import com.codecool.tripplanner.db2.TripRoomDatabase;
 
 import java.util.List;
 
-public class TripRepository {
+public class RoomRepository implements TripRepository {
 
     private TripDao tripDao;
-    private LiveData<List<Trip>> allTrips;
+    private List<Trip> allTrips;
 
-    public TripRepository(Context context) {
+    public RoomRepository(Context context) {
         TripRoomDatabase db = TripRoomDatabase.getDatabase(context);
         tripDao = db.tripDao();
         allTrips = tripDao.getAlphabetizedTrips();
     }
 
+
+
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
-    LiveData<List<Trip>> getAllTrips() {
+    public List<Trip> getAllTrips() {
         return allTrips;
+    }
+
+    @Override
+    public void clearAllTrips() {
+        if (allTrips != null){
+            tripDao.deleteAll();
+        }
     }
 
     // You must call this on a non-UI thread or your app will throw an exception. Room ensures
@@ -33,3 +44,4 @@ public class TripRepository {
 
 
 }
+

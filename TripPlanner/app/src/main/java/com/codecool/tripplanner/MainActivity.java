@@ -2,10 +2,10 @@ package com.codecool.tripplanner;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -15,8 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.codecool.tripplanner.db.Trip;
-import com.codecool.tripplanner.db.TripViewModel;
+import com.codecool.tripplanner.db2.RoomRepository;
+import com.codecool.tripplanner.db2.Trip;
+import com.codecool.tripplanner.db2.TripRoomDatabase;
 import com.codecool.tripplanner.newtrip.NewTripActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
@@ -31,7 +32,10 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity {
 
 
-    private TripViewModel tripViewModel;
+    // private TripViewModel tripViewModel;
+
+    private List<Trip> trips;
+    private TripRoomDatabase database;
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
@@ -55,32 +59,41 @@ public class MainActivity extends AppCompatActivity {
         final RecyclerViewAdapter adapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        database = TripRoomDatabase.getDatabase(this);
+        //adapter.setWords();
 
-        loadTripsToAdapter(adapter);
+
+
+        //loadTripsToAdapter(adapter);
         addClickListenerToFloatingButton();
 
     }
 
+    /*
     private void loadTripsToAdapter(RecyclerViewAdapter adapter) {
-        tripViewModel = new ViewModelProvider(this).get(TripViewModel.class);
-        tripViewModel.getAllTrips().observe(this, new Observer<List<Trip>>() {
-            @Override
-            public void onChanged(@Nullable final List<Trip> trips) {
-                loadingPanel.setVisibility(View.GONE);
-
-                try {
-                    TimeUnit.SECONDS.sleep(2);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (trips.size() == 0) status_message.setText(R.string.no_trips);
-                else {
-                    status_message.setVisibility(View.GONE);
-                    adapter.setWords(trips);
-                }
-            }
-        });
+        database = Room.databaseBuilder(this, TripRoomDatabase.class, "trip_database").build();
+        defaultView((List<Trip>) database, adapter);
     }
+
+     */
+
+
+    private void defaultView(@Nullable List<Trip> trips, RecyclerViewAdapter adapter) {
+        loadingPanel.setVisibility(View.GONE);
+
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (trips.size() == 0) status_message.setText(R.string.no_trips);
+        else {
+            status_message.setVisibility(View.GONE);
+            adapter.setWords(trips);
+        }
+    }
+
+
 
     private void addClickListenerToFloatingButton() {
         fab.setOnClickListener(new View.OnClickListener() {

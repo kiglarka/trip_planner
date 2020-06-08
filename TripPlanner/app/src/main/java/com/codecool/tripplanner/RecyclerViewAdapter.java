@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.codecool.tripplanner.db.Trip;
+import com.codecool.tripplanner.db2.Trip;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
