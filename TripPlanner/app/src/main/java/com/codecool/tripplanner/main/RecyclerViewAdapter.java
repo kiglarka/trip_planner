@@ -1,4 +1,4 @@
-package com.codecool.tripplanner;
+package com.codecool.tripplanner.main;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.codecool.tripplanner.R;
 import com.codecool.tripplanner.db2.Trip;
 import com.squareup.picasso.Picasso;
 

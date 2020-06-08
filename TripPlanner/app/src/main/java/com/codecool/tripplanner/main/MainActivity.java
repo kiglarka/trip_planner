@@ -1,4 +1,4 @@
-package com.codecool.tripplanner;
+package com.codecool.tripplanner.main;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.codecool.tripplanner.R;
 import com.codecool.tripplanner.db2.RoomRepository;
 import com.codecool.tripplanner.db2.Trip;
 import com.codecool.tripplanner.db2.TripRoomDatabase;
@@ -58,14 +59,15 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-        final com.codecool.tripplanner.RecyclerViewAdapter adapter = new com.codecool.tripplanner.RecyclerViewAdapter(this);
+        final RecyclerViewAdapter adapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         //database = TripRoomDatabase.getDatabase(this);
-        RoomRepository roomRepository = new RoomRepository(this);
-        List<Trip> trips = roomRepository.getAllTrips();
-        adapter.setWords(trips);
+        roomRepository = new RoomRepository(this);
+        trips = roomRepository.getAllTrips();
+        //adapter.setWords(trips);
+        defaultView(trips,adapter);
 
 
 
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
      */
 
 
-    private void defaultView(@Nullable List<Trip> trips, com.codecool.tripplanner.RecyclerViewAdapter adapter) {
+    private void defaultView(@Nullable List<Trip> trips, RecyclerViewAdapter adapter) {
         loadingPanel.setVisibility(View.GONE);
 
         try {

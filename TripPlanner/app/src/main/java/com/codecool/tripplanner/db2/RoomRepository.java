@@ -3,7 +3,7 @@ package com.codecool.tripplanner.db2;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.codecool.tripplanner.MainActivity;
+import com.codecool.tripplanner.main.MainActivity;
 import com.codecool.tripplanner.db2.Trip;
 import com.codecool.tripplanner.db2.TripDao;
 import com.codecool.tripplanner.db2.TripRoomDatabase;
@@ -54,7 +54,7 @@ public class RoomRepository implements TripRepository {
     // that you're not doing any long running operations on the main thread, blocking the UI.
     public void insert(Trip trip) {
         TripRoomDatabase.databaseWriteExecutor.execute(() -> {
-            tripDao.insert(trip);
+            db.tripDao().insert(trip);
         });
     }
 
