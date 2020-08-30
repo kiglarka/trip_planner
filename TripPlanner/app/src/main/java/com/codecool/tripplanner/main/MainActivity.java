@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.codecool.tripplanner.R;
 import com.codecool.tripplanner.databinding.ActivityMainBinding;
-import com.codecool.tripplanner.db2.RoomRepository;
 import com.codecool.tripplanner.db2.Trip;
 import com.codecool.tripplanner.newtrip.NewTripActivity;
 import com.google.android.gms.common.ConnectionResult;
@@ -21,11 +20,11 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainContract {
 
     private RecyclerViewAdapter adapter;
+    MainPresenter<MainActivity> presenter;
     private List<Trip> trips;
-    private RoomRepository roomRepository;
     private ActivityMainBinding binding;
 
     private static final int ERROR_DIALOG_REQUEST = 1;
@@ -35,17 +34,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         //ButterKnife.bind(this);
-        roomRepository = new RoomRepository(this);
-        trips = roomRepository.getAllTrips();
-
-        adapter = new RecyclerViewAdapter(trips);
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        binding.recyclerview .setAdapter(adapter);
-
-
-        defaultView();
-        adapter.setWords(trips);
-
+        presenter = new MainPresenter<MainActivity>(this);
+        presenter.onAttach(this);
         addClickListenerToFloatingButton();
 
     }
@@ -53,8 +43,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.setWords(roomRepository.getAllTrips());
-
+        trips = presenter.getTrips();
+        adapter = new RecyclerViewAdapter(trips);
+        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerview.setAdapter(adapter);
+        defaultView();
+        adapter.setWords(trips);
     }
 
     private void defaultView() {
