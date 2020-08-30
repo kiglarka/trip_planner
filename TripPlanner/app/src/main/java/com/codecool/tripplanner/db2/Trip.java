@@ -17,8 +17,6 @@ public class Trip {
     private String country;
     private String image;
 
-    //private String imgUrl;
-
     public Trip(@NonNull String city, String continent, String country, String image) {
         this.city = city;
         this.continent = continent;
@@ -32,11 +30,9 @@ public class Trip {
         return city;
     }
 
-
     public String getContinent() {
         return continent;
     }
-
 
     public String getCountry() {
         return country;

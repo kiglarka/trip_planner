@@ -58,13 +58,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull TripViewHolder holder, int position) {
 
-         /*
-        Glide.with(context)
-                .asBitmap()
-                .load(images.get(position))
-                .into(holder.image);
-         */
-
         if (cities != null) {
             Trip current = cities.get(position);
             holder.cityView.setText(current.getCity());

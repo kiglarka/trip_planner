@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +34,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    // private TripViewModel tripViewModel;
     private RecyclerViewAdapter adapter;
     private List<Trip> trips;
-    private TripRoomDatabase database;
     private RoomRepository roomRepository;
 
     @BindView(R.id.fab)
@@ -49,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.status_message)
     TextView status_message;
 
-
     private static final int ERROR_DIALOG_REQUEST = 1;
 
     @Override
@@ -58,18 +55,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
         adapter = new RecyclerViewAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        database = TripRoomDatabase.getDatabase(this);
         roomRepository = new RoomRepository(this);
         trips = roomRepository.getAllTrips();
         defaultView();
         adapter.setWords(trips);
 
-        //loadTripsToAdapter(adapter);
         addClickListenerToFloatingButton();
 
     }
@@ -80,15 +74,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.setWords(roomRepository.getAllTrips());
 
     }
-
-    /*
-    private void loadTripsToAdapter(RecyclerViewAdapter adapter) {
-        database = Room.databaseBuilder(this, TripRoomDatabase.class, "trip_database").build();
-        defaultView((List<Trip>) database, adapter);
-    }
-
-     */
-
 
     private void defaultView() {
         loadingPanel.setVisibility(View.GONE);
