@@ -32,7 +32,6 @@ public abstract class TripRoomDatabase extends RoomDatabase {
                 TripDao dao = INSTANCE.tripDao();
 
 
-
                 Trip trip = new Trip("Paris", "Europe", "France", "https://africana.arizona.edu/sites/africana.arizona.edu/files/Eiffel-Tower-Paris-France.jpg");
                 dao.insert(trip);
                 trip = new Trip("Copenhagen", "Europe", "Denmark", "https://img.washingtonpost.com/blogs/wonkblog/files/2016/08/Nyhavn_copenhagen.jpg");

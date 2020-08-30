@@ -1,68 +1,54 @@
 package com.codecool.tripplanner.main;
 
-import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codecool.tripplanner.R;
+import com.codecool.tripplanner.databinding.LayoutListitemBinding;
 import com.codecool.tripplanner.db2.Trip;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import de.hdodenhof.circleimageview.CircleImageView;
-
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TripViewHolder> {
 
-    class TripViewHolder extends RecyclerView.ViewHolder {
+    public class TripViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.image)
-        CircleImageView imageView;
+        private LayoutListitemBinding binding;
 
-        @BindView(R.id.city)
-        TextView cityView;
-        @BindView(R.id.country)
-        TextView countryView;
-        @BindView(R.id.continent)
-        TextView continentView;
-
-
-        private TripViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this,itemView);
+        public TripViewHolder(@NonNull LayoutListitemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 
-    private final LayoutInflater inflater;
-    private List<Trip> cities; // cached copy of words
+    private List<Trip> trips; // cached copy of words
 
-    RecyclerViewAdapter(Context context) {
-        inflater = LayoutInflater.from(context);
+    public RecyclerViewAdapter(List<Trip> trips) {
+        this.trips = trips;
     }
-
 
     @NonNull
     @Override
     public TripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.layout_listitem, parent, false);
-        return new TripViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        LayoutListitemBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_listitem, parent, false);
+        return new TripViewHolder(binding );
     }
 
     @Override
     public void onBindViewHolder(@NonNull TripViewHolder holder, int position) {
 
-        if (cities != null) {
-            Trip current = cities.get(position);
-            holder.cityView.setText(current.getCity());
-            holder.continentView.setText(current.getContinent());
-            holder.countryView.setText(current.getCountry());
+        if (trips != null) {
+            Trip current = trips.get(position);
+            holder.binding.city.setText(current.getCity());
+            holder.binding.continent.setText(current.getContinent());
+            holder.binding.country.setText(current.getCountry());
 
             try {
                 Picasso.get()
@@ -70,29 +56,27 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         .placeholder(R.drawable.ic_launcher_background)
                         .resize(80, 80)
                         .centerCrop()
-                        .into(holder.imageView);
+                        .into(holder.binding.image);
             } catch (Exception e) {
-                Picasso.get().load(R.drawable.ic_launcher_background).into(holder.imageView);
+                Picasso.get().load(R.drawable.ic_launcher_background).into(holder.binding.image);
                 e.toString();
             }
 
         } else {
-            holder.cityView.setText("No city found");
+            holder.binding.city.setText("No city found");
         }
 
     }
 
     void setWords(List<Trip> trips) {
-        cities = trips;
+        this.trips = trips;
         notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        if (cities != null) {
-            return cities.size();
+        if (trips != null) {
+            return trips.size();
         } else return 0;
-
-
     }
 }
