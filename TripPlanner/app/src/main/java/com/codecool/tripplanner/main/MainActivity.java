@@ -34,39 +34,36 @@ public class MainActivity extends AppCompatActivity implements MainContract {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         presenter = new MainPresenter<MainActivity>(this);
         presenter.onAttach(this);
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         addClickListenerToFloatingButton();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        trips = presenter.getTrips();
         adapter = new RecyclerViewAdapter(this, trips);
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerview.setAdapter(adapter);
+        trips = presenter.getTrips();
         defaultView();
         adapter.setWords(trips);
     }
 
     private void defaultView() {
-        binding.loadingPanel.setVisibility(View.GONE);
-
         try {
             TimeUnit.SECONDS.sleep(2);
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
         if (trips.size() == 0) binding.statusMessage.setText(R.string.no_trips);
         else {
             binding.statusMessage.setVisibility(View.GONE);
-            //adapter.setWords(trips);
+            binding.loadingPanel.setVisibility(View.GONE);
         }
     }
-
-
 
     private void addClickListenerToFloatingButton() {
         binding.fab.setOnClickListener(new View.OnClickListener() {
@@ -100,10 +97,5 @@ public class MainActivity extends AppCompatActivity implements MainContract {
         if (isServicesOK()) {
             startActivity(mapIntent);
         }
-        else {
-            Toast.makeText(this, "You can't make maps request", Toast.LENGTH_SHORT).show();
-        }
-
-
     }
 }
