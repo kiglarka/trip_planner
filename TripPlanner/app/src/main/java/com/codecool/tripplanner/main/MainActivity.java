@@ -1,7 +1,9 @@
 package com.codecool.tripplanner.main;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -33,18 +35,16 @@ public class MainActivity extends AppCompatActivity implements MainContract {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-        //ButterKnife.bind(this);
         presenter = new MainPresenter<MainActivity>(this);
         presenter.onAttach(this);
         addClickListenerToFloatingButton();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         trips = presenter.getTrips();
-        adapter = new RecyclerViewAdapter(trips);
+        adapter = new RecyclerViewAdapter(this, trips);
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerview.setAdapter(adapter);
         defaultView();
@@ -93,4 +93,17 @@ public class MainActivity extends AppCompatActivity implements MainContract {
         return false;
     }
 
+    @Override
+    public void openMaps(String uri) {
+        Intent mapIntent = new Intent(Intent.ACTION_VIEW);
+        mapIntent.setData(Uri.parse(uri));
+        if (isServicesOK()) {
+            startActivity(mapIntent);
+        }
+        else {
+            Toast.makeText(this, "You can't make maps request", Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
 }

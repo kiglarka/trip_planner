@@ -1,8 +1,11 @@
 package com.codecool.tripplanner.main;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
  import androidx.databinding.DataBindingUtil;
@@ -15,7 +18,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TripViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.TripViewHolder>  {
+
+    private List<Trip> trips; // cached copy of words
+    private Context context;
+
+    private static final String TAG = "RecyclerViewAdapter";
 
     public class TripViewHolder extends RecyclerView.ViewHolder {
 
@@ -27,9 +35,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
     }
 
-    private List<Trip> trips; // cached copy of words
-
-    public RecyclerViewAdapter(List<Trip> trips) {
+    public RecyclerViewAdapter(Context context, List<Trip> trips) {
+        this.context = context;
         this.trips = trips;
     }
 
@@ -38,7 +45,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public TripViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         LayoutListitemBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_listitem, parent, false);
-        return new TripViewHolder(binding );
+        return new TripViewHolder(binding);
     }
 
     @Override
@@ -46,6 +53,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         if (trips != null) {
             Trip current = trips.get(position);
+
             holder.binding.city.setText(current.getCity());
             holder.binding.continent.setText(current.getContinent());
             holder.binding.country.setText(current.getCountry());
@@ -61,6 +69,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 Picasso.get().load(R.drawable.ic_launcher_background).into(holder.binding.image);
                 e.toString();
             }
+
+
+            //setting onClicklistener up on RV item
+            holder.binding.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick:" + current.getCity());
+                    String uriString = "geo:0,0?q=" + current.getCity();
+                    Log.d(TAG, "onClick: " + uriString);
+                    if (context instanceof MainActivity) {
+                        ((MainActivity) context).openMaps(uriString);
+                    }
+                    else {
+                        Log.d(TAG, "onClick: Not main");
+                    }
+                }
+            });
 
         } else {
             holder.binding.city.setText("No city found");
@@ -79,4 +104,5 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             return trips.size();
         } else return 0;
     }
+
 }

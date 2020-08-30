@@ -24,7 +24,6 @@ public class Trip {
         this.image = image;
     }
 
-
     @NonNull
     public String getCity() {
         return city;
