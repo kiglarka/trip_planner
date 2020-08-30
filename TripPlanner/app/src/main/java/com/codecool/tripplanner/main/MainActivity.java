@@ -1,6 +1,7 @@
 package com.codecool.tripplanner.main;
 
 import android.app.Dialog;
+import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,7 +11,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.codecool.tripplanner.R;
 import com.codecool.tripplanner.databinding.ActivityMainBinding;
@@ -25,7 +28,7 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity implements MainContract {
 
     private RecyclerViewAdapter adapter;
-    MainPresenter<MainActivity> presenter;
+    MainPresenter presenter;
     private List<Trip> trips;
     private ActivityMainBinding binding;
 
@@ -34,21 +37,26 @@ public class MainActivity extends AppCompatActivity implements MainContract {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = new MainPresenter<MainActivity>(this);
+        presenter = new MainPresenter(this);
         presenter.onAttach(this);
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main);
         addClickListenerToFloatingButton();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         adapter = new RecyclerViewAdapter(this, trips);
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        binding.recyclerview.setAdapter(adapter);
+        setupRecyclerView();
         trips = presenter.getTrips();
         defaultView();
         adapter.setWords(trips);
+    }
+
+    private void setupRecyclerView() {
+        binding.recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        binding.recyclerview.setAdapter(adapter);
     }
 
     private void defaultView() {
@@ -90,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements MainContract {
         return false;
     }
 
-    @Override
     public void openMaps(String uri) {
         Intent mapIntent = new Intent(Intent.ACTION_VIEW);
         mapIntent.setData(Uri.parse(uri));

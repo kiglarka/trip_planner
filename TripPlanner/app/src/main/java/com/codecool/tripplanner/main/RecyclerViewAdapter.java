@@ -75,14 +75,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             holder.binding.parentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "onClick:" + current.getCity());
                     String uriString = "geo:0,0?q=" + current.getCity();
-                    Log.d(TAG, "onClick: " + uriString);
                     if (context instanceof MainActivity) {
                         ((MainActivity) context).openMaps(uriString);
-                    }
-                    else {
-                        Log.d(TAG, "onClick: Not main");
                     }
                 }
             });
